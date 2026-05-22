@@ -19,8 +19,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 /**
- * Clase que representa un usuario en el sistema.
- * Implementa UserDetails para integrarse con Spring Security.
+ * Clase que representa un usuario en el sistema. Implementa UserDetails para
+ * integrarse con Spring Security.
  * 
  * Esta entidad se almacena en la tabla "useraccount" en la base de datos.
  */
@@ -136,52 +136,27 @@ public class User implements UserDetails {
 		return enabled;
 	}
 
-	/**
-	 * Obtiene el signo zodiacal del usuario.
-	 */
-	public String obtenerSigno() {
+	//Returna el valor si es mayor menor de edad invalido o error
+	public char esMayorDeEdad() {
 
+		// i = invalid f = false t = true e = error
 		if (fechaNacimiento == null) {
-			return "Sin fecha de nacimiento";
+			return 'i';
 		}
 
 		int dia = fechaNacimiento.getDayOfMonth();
 		int mes = fechaNacimiento.getMonthValue();
+		int anyo = fechaNacimiento.getYear();
 
-		if ((mes == 3 && dia >= 21) || (mes == 4 && dia <= 19))
-			return "Aries";
+		if ((anyo >= 2008 && anyo <= 2026) && (mes <= 05 && mes > 0) && (dia <= 22 && dia > 0 && dia <= 31)) {
+			return 'f';
+		}
 
-		if ((mes == 4 && dia >= 20) || (mes == 5 && dia <= 20))
-			return "Tauro";
+		if ((anyo < 2008 && anyo > 1926) && (mes > 0) && (dia > 0 && dia <= 31)) {
+			return 't';
+		}
 
-		if ((mes == 5 && dia >= 21) || (mes == 6 && dia <= 20))
-			return "Geminis";
-
-		if ((mes == 6 && dia >= 21) || (mes == 7 && dia <= 22))
-			return "Cancer";
-
-		if ((mes == 7 && dia >= 23) || (mes == 8 && dia <= 22))
-			return "Leo";
-
-		if ((mes == 8 && dia >= 23) || (mes == 9 && dia <= 22))
-			return "Virgo";
-
-		if ((mes == 9 && dia >= 23) || (mes == 10 && dia <= 22))
-			return "Libra";
-
-		if ((mes == 10 && dia >= 23) || (mes == 11 && dia <= 21))
-			return "Escorpio";
-
-		if ((mes == 11 && dia >= 22) || (mes == 12 && dia <= 21))
-			return "Sagitario";
-
-		if ((mes == 12 && dia >= 22) || (mes == 1 && dia <= 19))
-			return "Capricornio";
-
-		if ((mes == 1 && dia >= 20) || (mes == 2 && dia <= 18))
-			return "Acuario";
-
-		return "Piscis";
+		return 'e';
 	}
 
 	public Long getId() {
@@ -260,16 +235,13 @@ public class User implements UserDetails {
 
 		User other = (User) obj;
 
-		return Objects.equals(id, other.id)
-				&& Objects.equals(password, other.password)
+		return Objects.equals(id, other.id) && Objects.equals(password, other.password)
 				&& Objects.equals(username, other.username);
 	}
 
 	@Override
 	public String toString() {
-		return "User [id=" + id
-				+ ", username=" + username
-				+ ", role=" + role
-				+ ", fechaNacimiento=" + fechaNacimiento + "]";
+		return "User [id=" + id + ", username=" + username + ", role=" + role + ", fechaNacimiento=" + fechaNacimiento
+				+ "]";
 	}
 }

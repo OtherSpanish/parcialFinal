@@ -37,8 +37,7 @@ public class SecurityConfig {
 	 * @throws Exception excepción
 	 */
 	@Bean
-	SecurityFilterChain securityFilterChain(
-			HttpSecurity http) throws Exception {
+	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
 		http
 
@@ -55,64 +54,37 @@ public class SecurityConfig {
 						/**
 						 * Auth libre.
 						 */
-						.requestMatchers("/login/**")
-						.permitAll()
+						.requestMatchers("/login/**").permitAll()
 
 						/**
-						 * Controlador:
-						 * USER, EDITOR, COMENTADOR,
-						 * ADMINISTRATIVO.
+						 * ADMIN: ADMIN.
 						 */
-						.requestMatchers("/controlador/**")
-						.hasAnyRole(
-								"USER",
-								"EDITOR",
-								"COMENTADOR",
-								"ADMINISTRATIVO")
+						.requestMatchers("/admin/**").hasAnyRole("ADMIN")
 
 						/**
-						 * ADMIN:
-						 * ADMIN.
+						 * Ninyo: NINYO
 						 */
-						.requestMatchers("/admin/**")
-						.hasAnyRole(
-								"ADMIN")
+						.requestMatchers("/ninyo/**").hasAnyRole("NINYO")
 
 						/**
-						 * Ninyo:
-						 * NINYO
+						 * Adulto: ADULTO.
 						 */
-						.requestMatchers("/ninyo/**")
-						.hasAnyRole(
-								"NINYO")
-						
-						/**
-						 * Adulto:
-						 * ADULTO.
-						 */
-						.requestMatchers("/adulto/**")
-						.hasAnyRole(
-								"ADULTO")
+						.requestMatchers("/adulto/**").hasAnyRole("ADULTO")
 
 						/**
 						 * Todo lo demás requiere auth.
 						 */
-						.anyRequest()
-						.authenticated())
+						.anyRequest().authenticated())
 
 				/**
 				 * Stateless JWT.
 				 */
-				.sessionManagement(session -> session
-						.sessionCreationPolicy(
-								SessionCreationPolicy.STATELESS))
+				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
 				/**
 				 * Agrega filtro JWT.
 				 */
-				.addFilterBefore(
-						jwtAuthenticationFilter,
-						UsernamePasswordAuthenticationFilter.class);
+				.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
 		return http.build();
 	}
@@ -136,9 +108,7 @@ public class SecurityConfig {
 	 * @throws Exception excepción
 	 */
 	@Bean
-	AuthenticationManager authenticationManager(
-			AuthenticationConfiguration config)
-			throws Exception {
+	AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
 
 		return config.getAuthenticationManager();
 	}

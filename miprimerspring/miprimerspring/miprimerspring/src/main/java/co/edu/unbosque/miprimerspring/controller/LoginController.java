@@ -13,8 +13,8 @@ import co.edu.unbosque.miprimerspring.service.LoginService;
  * Maneja login y registro utilizando JWT.
  */
 @RestController
-@RequestMapping("/auth")
-@CrossOrigin(origins = { "http://localhost:4200", "http://localhost:8080", "*" })
+@RequestMapping("/login")
+@CrossOrigin(origins = { "http://localhost:4200", "*" })
 public class LoginController {
 
 	@Autowired
