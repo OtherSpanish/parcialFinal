@@ -1,5 +1,7 @@
 package co.edu.unbosque.miprimerspring.controller;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -9,6 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import co.edu.unbosque.miprimerspring.dto.JokeDTO;
+import co.edu.unbosque.miprimerspring.entity.User;
+import co.edu.unbosque.miprimerspring.repository.UserRepository;
+import co.edu.unbosque.miprimerspring.service.JokeRequestService;
 
 @RestController
 @RequestMapping("/adulto")
@@ -18,16 +23,25 @@ public class AdultoController {
 	@Autowired
 	private RestTemplate restTemplate;
 
-	/**
-	 * Retorna un chiste de cualquier tipo, sin restricciones.
-	 * Solo accesible para usuarios con rol ADULTO.
-	 */
+	@Autowired
+	private JokeRequestService jokeRequestService;
+
+	@Autowired
+	private UserRepository userRepository;
+
 	@GetMapping("/chiste")
-	public ResponseEntity<JokeDTO> getChiste() {
+	public ResponseEntity<JokeDTO> getChiste(Principal principal) {
 
 		String url = "https://v2.jokeapi.dev/joke/Any";
 
 		JokeDTO joke = restTemplate.getForObject(url, JokeDTO.class);
+
+		if (joke != null && principal != null) {
+
+			userRepository.findByUsername(principal.getName()).ifPresent(user -> {
+				jokeRequestService.saveRequest(user.getUsername(), user.getRole(), joke);
+			});
+		}
 
 		return ResponseEntity.ok(joke);
 	}

@@ -11,9 +11,6 @@ import co.edu.unbosque.miprimerspring.entity.User;
 import co.edu.unbosque.miprimerspring.repository.UserRepository;
 
 
-/**
- * Servicio encargado de la autenticación y registro de usuarios.
- */
 @Service
 public class LoginService {
 
@@ -29,13 +26,7 @@ public class LoginService {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
-	/**
-	 * Registra un nuevo usuario en el sistema.
-	 * 
-	 * @param userDTO datos del usuario
-	 * @return token JWT generado
-	 * @throws Exception si el usuario ya existe
-	 */
+	
 	public String register(UserDTO userDTO) throws Exception {
 
 		if (userRepository.findByUsername(userDTO.getUsername()).isPresent()) {
@@ -48,22 +39,24 @@ public class LoginService {
 
 		user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
 
-		user.setRole(userDTO.getRole());
-
 		user.setFechaNacimiento(userDTO.getFechaNacimiento());
+
+		char mayorDeEdad = user.esMayorDeEdad();
+
+		if (mayorDeEdad == 't') {
+			user.setRole(User.Role.ADULTO);
+		} else if (mayorDeEdad == 'f') {
+			user.setRole(User.Role.NINYO);
+		} else {
+			user.setRole(User.Role.NOAUTH);
+		}
 
 		userRepository.save(user);
 
 		return jwtService.generateToken(user);
 	}
 
-	/**
-	 * Autentica un usuario en el sistema.
-	 * 
-	 * @param userDTO credenciales del usuario
-	 * @return token JWT
-	 * @throws Exception si las credenciales son inválidas
-	 */
+
 	public String login(UserDTO userDTO) throws Exception {
 
 		authenticationManager.authenticate(
