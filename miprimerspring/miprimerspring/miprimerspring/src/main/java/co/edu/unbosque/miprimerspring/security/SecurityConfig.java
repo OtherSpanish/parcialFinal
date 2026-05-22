@@ -55,15 +55,15 @@ public class SecurityConfig {
 						/**
 						 * Auth libre.
 						 */
-						.requestMatchers("/auth/**")
+						.requestMatchers("/login/**")
 						.permitAll()
 
 						/**
-						 * Noticias:
+						 * Controlador:
 						 * USER, EDITOR, COMENTADOR,
 						 * ADMINISTRATIVO.
 						 */
-						.requestMatchers("/noticias/**")
+						.requestMatchers("/controlador/**")
 						.hasAnyRole(
 								"USER",
 								"EDITOR",
@@ -71,23 +71,28 @@ public class SecurityConfig {
 								"ADMINISTRATIVO")
 
 						/**
-						 * Comentarios:
-						 * COMENTADOR y ADMINISTRATIVO.
+						 * ADMIN:
+						 * ADMIN.
 						 */
-						.requestMatchers("/comentarios/**")
+						.requestMatchers("/admin/**")
 						.hasAnyRole(
-								"COMENTADOR",
-								"ADMINISTRATIVO")
+								"ADMIN")
 
 						/**
-						 * Horóscopos:
-						 * USER, EDITOR y ADMINISTRATIVO.
+						 * Ninyo:
+						 * NINYO
 						 */
-						.requestMatchers("/horoscopos/**")
+						.requestMatchers("/ninyo/**")
 						.hasAnyRole(
-								"USER",
-								"EDITOR",
-								"ADMINISTRATIVO")
+								"NINYO")
+						
+						/**
+						 * Adulto:
+						 * ADULTO.
+						 */
+						.requestMatchers("/adulto/**")
+						.hasAnyRole(
+								"ADULTO")
 
 						/**
 						 * Todo lo demás requiere auth.
