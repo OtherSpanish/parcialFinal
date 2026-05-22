@@ -1,6 +1,5 @@
 package co.edu.unbosque.miprimerspring.security;
 
-<<<<<<< Updated upstream
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,93 +10,56 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-=======
->>>>>>> Stashed changes
+import co.edu.unbosque.miprimerspring.service.UserDetailsServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.stereotype.Component;
-import org.springframework.web.filter.OncePerRequestFilter;
 
 /**
- * Filtro de autenticación JWT que intercepta las solicitudes HTTP. Valida los
- * tokens JWT en las solicitudes y establece la autenticación en el contexto de
- * seguridad. Se ejecuta una vez por cada solicitud.
+ * Filtro encargado de validar JWT en cada petición.
  */
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-	/** Utilidad para operaciones con tokens JWT. */
-	private final JwtUtil jwtUtil;
+	@Autowired
+	private co.edu.unbosque.miprimerspring.service.JwtService jwtService;
 
-	/** Servicio para cargar los detalles del usuario. */
-	private final UserDetailsService userDetailsService;
-
-	/**
-	 * Constructor que inicializa las dependencias necesarias para el filtro.
-	 *
-	 * @param jwtUtil            Utilidad para operaciones con tokens JWT
-	 * @param userDetailsService Servicio para cargar los detalles del usuario
-	 */
-	public JwtAuthenticationFilter(JwtUtil jwtUtil, UserDetailsService userDetailsService) {
-		this.jwtUtil = jwtUtil;
-		this.userDetailsService = userDetailsService;
-	}
+	@Autowired
+	private UserDetailsServiceImpl userDetailsService;
 
 	/**
-	 * Método principal del filtro que se ejecuta para cada solicitud HTTP. Extrae y
-	 * valida el token JWT del encabezado de autorización. Si el token es válido,
-	 * establece la autenticación en el contexto de seguridad.
-	 *
-	 * @param request     Solicitud HTTP entrante
-	 * @param response    Respuesta HTTP saliente
-	 * @param filterChain Cadena de filtros para continuar el procesamiento
-	 * @throws ServletException Si ocurre un error durante el procesamiento del
-	 *                          servlet
-	 * @throws IOException      Si ocurre un error de entrada/salida
+	 * Filtra cada request HTTP para validar JWT.
 	 */
 	@Override
-	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+	protected void doFilterInternal(
+			HttpServletRequest request,
+			HttpServletResponse response,
+			FilterChain filterChain)
 			throws ServletException, IOException {
 
-		final String authorizationHeader = request.getHeader("Authorization");
+		final String authHeader = request.getHeader("Authorization");
 
-		String username = null;
-		String jwt = null;
+		final String jwt;
 
-<<<<<<< Updated upstream
 		final String username;
 
 		/**
-		 * Verifica si existe header Authorization y si empieza por Bearer.
+		 * Verifica si existe header Authorization
+		 * y si empieza por Bearer.
 		 */
 		if (authHeader == null || !authHeader.startsWith("Bearer ")) {
 
 			filterChain.doFilter(request, response);
 
 			return;
-=======
-		if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-			jwt = authorizationHeader.substring(7);
-			try {
-				username = jwtUtil.extractUsername(jwt);
-			} catch (Exception e) {
-				logger.error("Error extracting username from token", e);
-			}
->>>>>>> Stashed changes
 		}
 
-		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-			UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+		/**
+		 * Extrae token.
+		 */
+		jwt = authHeader.substring(7);
 
-<<<<<<< Updated upstream
 		/**
 		 * Extrae username desde JWT.
 		 */
@@ -106,28 +68,32 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		/**
 		 * Si el usuario no está autenticado aún.
 		 */
-		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+		if (username != null
+				&& SecurityContextHolder
+						.getContext()
+						.getAuthentication() == null) {
 
-			UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+			UserDetails userDetails =
+					userDetailsService.loadUserByUsername(username);
 
 			/**
 			 * Valida token.
 			 */
 			if (jwtService.validateToken(jwt, userDetails)) {
 
-				UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails,
-						null, userDetails.getAuthorities());
+				UsernamePasswordAuthenticationToken authToken =
+						new UsernamePasswordAuthenticationToken(
+								userDetails,
+								null,
+								userDetails.getAuthorities());
 
-				authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+				authToken.setDetails(
+						new WebAuthenticationDetailsSource()
+								.buildDetails(request));
 
-				SecurityContextHolder.getContext().setAuthentication(authToken);
-=======
-			if (jwtUtil.validateToken(jwt, userDetails)) {
-				UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-						userDetails, null, userDetails.getAuthorities());
-				authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-				SecurityContextHolder.getContext().setAuthentication(authenticationToken);
->>>>>>> Stashed changes
+				SecurityContextHolder
+						.getContext()
+						.setAuthentication(authToken);
 			}
 		}
 

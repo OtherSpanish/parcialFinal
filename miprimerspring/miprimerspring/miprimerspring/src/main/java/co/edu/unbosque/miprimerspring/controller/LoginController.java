@@ -7,9 +7,10 @@ import org.springframework.web.bind.annotation.*;
 import co.edu.unbosque.miprimerspring.dto.UserDTO;
 import co.edu.unbosque.miprimerspring.service.LoginService;
 
+
 /**
- * Controlador encargado de la autenticación de usuarios. Maneja login y
- * registro utilizando JWT.
+ * Controlador encargado de la autenticación de usuarios.
+ * Maneja login y registro utilizando JWT.
  */
 @RestController
 @RequestMapping("/login")
