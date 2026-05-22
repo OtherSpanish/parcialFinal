@@ -7,7 +7,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 import co.edu.unbosque.miprimerspring.entity.User;
 import co.edu.unbosque.miprimerspring.repository.UserRepository;
 
@@ -43,6 +46,7 @@ public class LoadDatabase {
 				userRepo.save(adminUser);
 				log.info("Precargando usuario administrador");
 			}
+<<<<<<< Updated upstream
 			Optional<User> found2 = userRepo.findByUsername("normaluser");
 			if (found2.isPresent()) {
 				log.info("El usuario normal ya existe, omitiendo la creación del usuario normal...");
@@ -51,6 +55,16 @@ public class LoadDatabase {
 				userRepo.save(normalUser);
 				log.info("Precargando usuario normal");
 			}
+=======
+//			Optional<User> found2 = userRepo.findByUsername("adulto");
+//			if (found2.isPresent()) {
+//				log.info("El usuario normal ya existe, omitiendo la creación del usuario normal...");
+//			} else {
+//				User normalUser = new User("adulto", passwordEncoder.encode("1234567890"), User.Role.ADULTO);
+//				userRepo.save(normalUser);
+//				log.info("Precargando adulto");
+//			}
+>>>>>>> Stashed changes
 		};
 	}
 }

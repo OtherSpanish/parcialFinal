@@ -1,6 +1,7 @@
 package co.edu.unbosque.miprimerspring.service;
 
 import java.io.IOException;
+
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -33,4 +34,12 @@ public class ExternalHTTPRequestHandler {
 		return gson.fromJson(respuesta.body(), JokeDTO.class);
 	}
 
+<<<<<<< Updated upstream
+=======
+//	public static void main(String[] args) {
+//		MultipleJokeDTO chistes = doGetListaChiste("https://v2.jokeapi.dev/joke/Programming?lang=es&amount=10");
+//		for (JokeDTO c : chistes.getJokes()) {
+//			System.out.println(c.toString());
+//		}
+>>>>>>> Stashed changes
 }

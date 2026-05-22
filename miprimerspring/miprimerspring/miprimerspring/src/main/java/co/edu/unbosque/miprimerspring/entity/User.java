@@ -82,7 +82,7 @@ public class User implements UserDetails {
 	}
 
 	/**
-	 * Constructor con username y password.
+	 * Constructor con username, password y rol.
 	 */
 	public User(String username, String password, Role role) {
 		this();

@@ -17,7 +17,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class OpenApiConfig {
 	// Clase de configuración para la documentación OpenAPI
+<<<<<<< Updated upstream
 //
+=======
+
+>>>>>>> Stashed changes
 	/**
 	 * Define componentes reutilizables para la documentación OpenAPI. Incluye
 	 * ejemplos de respuestas comunes para mejorar la documentación.

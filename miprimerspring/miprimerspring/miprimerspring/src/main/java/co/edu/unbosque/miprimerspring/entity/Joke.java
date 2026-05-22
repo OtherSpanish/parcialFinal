@@ -22,7 +22,11 @@ public class Joke {
 	private String joke;
 
 	public Joke() {
+<<<<<<< Updated upstream
 		// TODO Auto-generated constructor stub
+=======
+
+>>>>>>> Stashed changes
 	}
 
 	public Joke(String category, String type, String setup, String delivery, String joke) {

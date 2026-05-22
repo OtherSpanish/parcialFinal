@@ -6,9 +6,9 @@ public class JokeDTO {
 	private String setup;
 	private String delivery;
 	private String joke;
-	
+
 	public JokeDTO() {
-		// TODO Auto-generated constructor stub
+
 	}
 
 	public JokeDTO(String category, String type, String setup, String delivery, String joke) {
@@ -65,7 +65,5 @@ public class JokeDTO {
 		return "JokeDTO [category=" + category + ", type=" + type + ", setup=" + setup + ", delivery=" + delivery
 				+ ", joke=" + joke + "]";
 	}
-	
-	
-	
+
 }
