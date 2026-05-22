@@ -82,12 +82,13 @@ public class User implements UserDetails {
 	}
 
 	/**
-	 * Constructor con username y password.
+	 * Constructor con username, password y rol.
 	 */
-	public User(String username, String password) {
+	public User(String username, String password, Role role) {
 		this();
 		this.username = username;
 		this.password = password;
+		this.role = role;
 	}
 
 	/**
@@ -136,7 +137,7 @@ public class User implements UserDetails {
 		return enabled;
 	}
 
-	//Returna el valor si es mayor menor de edad invalido o error
+	// Returna el valor si es mayor menor de edad invalido o error
 	public char esMayorDeEdad() {
 
 		// i = invalid f = false t = true e = error

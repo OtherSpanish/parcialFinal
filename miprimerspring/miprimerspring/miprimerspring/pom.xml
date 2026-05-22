@@ -32,7 +32,6 @@
 		<java.version>25</java.version>
 	</properties>
 	<dependencies>
-
 		<!-- Security -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

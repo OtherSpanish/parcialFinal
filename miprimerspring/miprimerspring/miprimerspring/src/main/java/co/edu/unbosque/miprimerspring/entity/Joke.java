@@ -1,17 +1,35 @@
-package co.edu.unbosque.miprimerspring.dto;
+package co.edu.unbosque.miprimerspring.entity;
 
-public class JokeDTO {
+import java.util.Objects;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "joke")
+public class Joke {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	private String category;
 	private String type;
 	private String setup;
 	private String delivery;
 	private String joke;
 
-	public JokeDTO() {
+	public Joke() {
+<<<<<<< Updated upstream
+		// TODO Auto-generated constructor stub
+=======
 
+>>>>>>> Stashed changes
 	}
 
-	public JokeDTO(String category, String type, String setup, String delivery, String joke) {
+	public Joke(String category, String type, String setup, String delivery, String joke) {
 		super();
 		this.category = category;
 		this.type = type;
@@ -58,6 +76,23 @@ public class JokeDTO {
 
 	public void setJoke(String joke) {
 		this.joke = joke;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Joke other = (Joke) obj;
+		return Objects.equals(id, other.id);
 	}
 
 	@Override
