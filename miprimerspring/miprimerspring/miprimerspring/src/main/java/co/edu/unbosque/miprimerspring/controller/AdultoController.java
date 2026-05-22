@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import co.edu.unbosque.miprimerspring.dto.JokeDTO;
 
 @RestController
 @RequestMapping("/adulto")
