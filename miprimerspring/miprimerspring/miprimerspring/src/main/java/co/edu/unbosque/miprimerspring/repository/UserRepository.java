@@ -7,10 +7,9 @@ import org.springframework.stereotype.Repository;
 
 import co.edu.unbosque.miprimerspring.entity.User;
 
-
 /**
- * Repositorio encargado de las operaciones de base de datos
- * relacionadas con los usuarios.
+ * Repositorio encargado de las operaciones de base de datos relacionadas con
+ * los usuarios.
  */
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
